@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación Técnica - Sistema de Cartera Histórica | ASPAEN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --aspaen-blue: #003d82;
+            --aspaen-light-blue: #0056b3;
+            --aspaen-gold: #d4af37;
+            --aspaen-dark: #1a1a1a;
+            --aspaen-gray: #f5f7fa;
+            --aspaen-text: #333333;
+            --success: #28a745;
+            --warning: #ffc107;
+            --info: #17a2b8;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: var(--aspaen-text);
+            background: var(--aspaen-gray);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--aspaen-blue) 0%, var(--aspaen-light-blue) 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 2rem;
+            color: var(--aspaen-blue);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .header-title h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-title p {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .hero {
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-left: 6px solid var(--aspaen-gold);
+        }
+
+        .hero h2 {
+            color: var(--aspaen-blue);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero h2 i {
+            margin-right: 0.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--aspaen-text);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .problem-box {
+            background: #fff3cd;
+            border-left: 4px solid var(--warning);
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border-radius: 8px;
+        }
+
+        .problem-box h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .solution-box {
+            background: #d4edda;
+            border-left: 4px solid var(--success);
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border-radius: 8px;
+        }
+
+        .solution-box h3 {
+            color: #155724;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background: white;
+            border: 2px solid var(--aspaen-blue);
+            color: var(--aspaen-blue);
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .tab-button i {
+            margin-right: 0.5rem;
+        }
+
+        .tab-button:hover {
+            background: var(--aspaen-blue);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,61,130,0.3);
+        }
+
+        .tab-button.active {
+            background: var(--aspaen-blue);
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,61,130,0.3);
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .table-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #e0e0e0;
+        }
+
+        .table-card h3 {
+            color: var(--aspaen-blue);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .table-card h4 {
+            color: var(--aspaen-light-blue);
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        th {
+            background: var(--aspaen-blue);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #444;
+        }
+
+        .code-title {
+            color: var(--aspaen-gold);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .copy-button {
+            background: var(--aspaen-gold);
+            color: var(--aspaen-dark);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .copy-button i {
+            margin-right: 0.3rem;
+        }
+
+        .copy-button:hover {
+            background: #c9a335;
+            transform: scale(1.05);
+        }
+
+        .keyword { color: #569cd6; }
+        .string { color: #ce9178; }
+        .comment { color: #6a9955; }
+        .function { color: #dcdcaa; }
+        .number { color: #b5cea8; }
+
+        .diagram {
+            background: white;
+            border: 2px solid var(--aspaen-blue);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .diagram-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .mermaid {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .result-example {
+            background: #f8f9fa;
+            border: 2px solid var(--aspaen-blue);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .result-example h4 {
+            color: var(--aspaen-blue);
+            margin-bottom: 1rem;
+        }
+
+        .result-table {
+            width: 100%;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-top: 1rem;
+        }
+
+        .result-table th {
+            background: var(--aspaen-blue);
+            color: white;
+            padding: 0.75rem;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+
+        .result-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.85rem;
+        }
+
+        .flow-step {
+            background: linear-gradient(135deg, var(--aspaen-blue), var(--aspaen-light-blue));
+            color: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,61,130,0.2);
+        }
+
+        .flow-step::after {
+            content: '\f107';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            color: var(--aspaen-blue);
+        }
+
+        .flow-step:last-child::after {
+            content: '';
+        }
+
+        .flow-step h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .flow-step h4 i {
+            margin-right: 0.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 0.2rem;
+        }
+
+        /* Estilos para diagramas CSS personalizados */
+        .diagram-box {
+            background: white;
+            border: 2px solid var(--aspaen-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,61,130,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .diagram-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,61,130,0.2);
+        }
+
+        .diagram-box h4 {
+            color: var(--aspaen-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .diagram-arrow {
+            text-align: center;
+            color: var(--aspaen-blue);
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+
+        .diagram-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .diagram-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .diagram-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge i {
+            margin-right: 0.3rem;
+        }
+
+        .badge-primary { background: var(--aspaen-blue); color: white; }
+        .badge-success { background: var(--success); color: white; }
+        .badge-warning { background: var(--warning); color: var(--aspaen-dark); }
+        .badge-info { background: var(--info); color: white; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0,61,130,0.05), rgba(212,175,55,0.05));
+            border-left: 4px solid var(--aspaen-gold);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .highlight-box h4 {
+            color: var(--aspaen-blue);
+            margin-bottom: 1rem;
+        }
+
+        .highlight-box h4 i {
+            margin-right: 0.5rem;
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-top: 1rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        li i {
+            margin-right: 0.5rem;
+            color: var(--aspaen-blue);
+        }
+
+        .footer {
+            background: var(--aspaen-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .steps-container {
+            display: grid;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .step-card {
+            background: white;
+            border: 2px solid var(--aspaen-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+            margin-top: 16px;
+        }
+
+        .step-card:hover {
+            box-shadow: 0 8px 16px rgba(0,61,130,0.15);
+            transform: translateY(-4px);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--aspaen-gold);
+            color: var(--aspaen-dark);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .step-card h4 {
+            color: var(--aspaen-blue);
+            margin-bottom: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-title h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero {
+                padding: 2rem;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .tab-button {
+                width: 100%;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="header-title">
+                    <h1>ASPAEN - NetSuite</h1>
+                    <p>Sistema de Consulta de Cartera Histórica</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="hero">
+            <h2><i class="fas fa-chart-line"></i> Análiss de Cartera Histórica</h2>
+            <p class="hero-subtitle">Documentación técnica para consultar el saldo de cartera en cualquier fecha pasada</p>
+            
+            <div class="problem-box">
+                <h3><i class="fas fa-exclamation-triangle"></i> Problemática Identificada</h3>
+                <p><strong>Situación actual:</strong></p>
+                <ul>
+                    <li><i class="fas fa-circle"></i> NetSuite actualiza dinámicamente el campo <code>foreignamountunpaid</code> con cada pago realizado</li>
+                    <li><i class="fas fa-circle"></i> Este campo refleja el saldo ACTUAL, no histórico</li>
+                    <li><i class="fas fa-circle"></i> Si una factura tiene 8 recibos de caja aplicados, es <strong>imposible</strong> conocer cuál era el saldo hace 2 o 3 meses usando este campo</li>
+                    <li><i class="fas fa-circle"></i> No se puede generar reportes históricos de cartera vencida a fechas pasadas</li>
+                </ul>
+            </div>
+
+            <div class="solution-box">
+                <h3><i class="fas fa-check-circle"></i> Pasos a seguir</h3>
+                <ul>
+                    <li><i class="fas fa-history"></i> <strong>Reconstrucción histórica:</strong> Tomar el monto original facturado (<code>foreigntotal</code>)</li>
+                    <li><i class="fas fa-minus-circle"></i> <strong>Restar pagos aplicados:</strong> Sumar solo los recibos de caja aplicados <strong>hasta la fecha de consulta</strong></li>
+                    <li><i class="fas fa-link"></i> <strong>Usar tabla de vínculos:</strong> <code>AppliedCreditTransactionLineLink</code> contiene la fecha exacta de aplicación de cada pago</li>
+                    <li><i class="fas fa-trophy"></i> <strong>Resultado:</strong> Saldo de cartera preciso en cualquier fecha histórica</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab('estructura')"><i class="fas fa-table"></i> Estructura de Tablas</button>
+            <button class="tab-button" onclick="openTab('diagrama')"><i class="fas fa-project-diagram"></i> Diagramas & Flujo</button>
+            <!-- <button class="tab-button" onclick="openTab('migracion')"><i class="fas fa-database"></i> Migración de Datos</button>
+            <button class="tab-button" onclick="openTab('queries')"><i class="fas fa-code"></i> Queries de Consulta</button>
+            <button class="tab-button" onclick="openTab('ejemplos')"><i class="fas fa-table"></i> Ejemplos de Resultados</button>
+            <button class="tab-button" onclick="openTab('implementacion')"><i class="fas fa-rocket"></i> Implementación</button> -->
+        </div>
+
+        <!-- TAB 1: Estructura de Tablas -->
+        <div id="estructura" class="tab-content active">
+            <h2><i class="fas fa-table"></i> Estructura de Tablas NetSuite</h2>
+
+            <div class="table-card">
+                <h3><i class="fas fa-file-invoice"></i> 1. Transaction (Transacciones)</h3>
+                <p><strong>Descripción:</strong> Tabla principal que almacena todas las transacciones del sistema (facturas, pagos, notas crédito, etc.)</p>
+                
+                <h4>Campos Clave para Cartera:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Campo</th>
+                            <th>Tipo</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>id</strong></td>
+                            <td>BIGINT</td>
+                            <td>Identificador único de la transacción</td>
+                        </tr>
+                        <tr>
+                            <td><strong>tranid</strong></td>
+                            <td>NVARCHAR(138)</td>
+                            <td>Número visible del documento (ej: "FAC-001234")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>type</strong></td>
+                            <td>NVARCHAR(8)</td>
+                            <td>Tipo: <span class="badge badge-primary"><i class="fas fa-file-invoice"></i> CustInvc</span> (Factura), <span class="badge badge-success"><i class="fas fa-money-bill"></i> CustPymt</span> (Pago), <span class="badge badge-warning"><i class="fas fa-credit-card"></i> CustCred</span> (Nota Crédito)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>entity</strong></td>
+                            <td>BIGINT</td>
+                            <td>ID del cliente (relación con tabla Customer)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>trandate</strong></td>
+                            <td>DATETIME2</td>
+                            <td>Fecha de emisión del documento</td>
+                        </tr>
+                        <tr>
+                            <td><strong>duedate</strong></td>
+                            <td>DATETIME2</td>
+                            <td>Fecha de vencimiento (solo facturas)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>foreigntotal</strong></td>
+                            <td>FLOAT</td>
+                            <td><i class="fas fa-star"></i> <strong>Monto total original</strong> (valor inicial facturado - NO cambia)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>foreignamountunpaid</strong></td>
+                            <td>FLOAT</td>
+                            <td><i class="fas fa-exclamation-triangle"></i> Saldo pendiente ACTUAL (se actualiza dinámicamente - NO usar para histórico)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-bullseye"></i> Punto Crítico</h4>
+                    <p><strong>foreigntotal:</strong> Valor original que NUNCA cambia. Este es el que usamos para reconstruir el histórico.</p>
+                    <p><strong>foreignamountunpaid:</strong> Valor dinámico que refleja el saldo HOY. NO sirve para consultas históricas.</p>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <h3><i class="fas fa-users"></i> 2. Customer (Clientes)</h3>
+                <p><strong>Descripción:</strong> Catálogo maestro de clientes con información demográfica y de contacto</p>
+                
+                <h4>Campos Principales:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Campo</th>
+                            <th>Tipo</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>id</strong></td>
+                            <td>BIGINT</td>
+                            <td>Identificador único del cliente</td>
+                        </tr>
+                        <tr>
+                            <td><strong>entityid</strong></td>
+                            <td>NVARCHAR(255)</td>
+                            <td>Código del cliente (ej: "CLI-001")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>companyname</strong></td>
+                            <td>NVARCHAR(255)</td>
+                            <td>Razón social o nombre completo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>email</strong></td>
+                            <td>NVARCHAR(256)</td>
+                            <td>Correo electrónico</td>
+                        </tr>
+                        <tr>
+                            <td><strong>phone</strong></td>
+                            <td>NVARCHAR(100)</td>
+                            <td>Teléfono de contacto</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p><strong>Relación:</strong> <code>Customer.id = Transaction.entity</code></p>
+            </div>
+
+            <div class="table-card">
+                <h3><i class="fas fa-link"></i> 3. AppliedCreditTransactionLineLink (Vínculos de Pagos)</h3>
+                <p><strong>Descripción:</strong> Tabla que registra qué pagos se aplicaron contra qué facturas y CUÁNDO</p>
+                
+                <h4>Campos Esenciales:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Campo</th>
+                            <th>Tipo</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>previousdoc</strong></td>
+                            <td>BIGINT</td>
+                            <td><i class="fas fa-star"></i> ID de la factura original (documento que se está pagando)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>nextdoc</strong></td>
+                            <td>BIGINT</td>
+                            <td>ID del pago o nota crédito aplicado</td>
+                        </tr>
+                        <tr>
+                            <td><strong>foreignamount</strong></td>
+                            <td>FLOAT</td>
+                            <td>Monto aplicado en esta relación específica</td>
+                        </tr>
+                        <tr>
+                            <td><strong>nextdate</strong></td>
+                            <td>DATETIME2</td>
+                            <td><i class="fas fa-bullseye"></i> <strong>Fecha de aplicación del pago</strong> (CRÍTICO para filtros históricos)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>previoustype</strong></td>
+                            <td>NVARCHAR(12)</td>
+                            <td>Tipo del documento original (CustInvc, VendBill)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>nexttype</strong></td>
+                            <td>NVARCHAR(12)</td>
+                            <td>Tipo del documento aplicado (CustPymt, CustCred)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-key"></i> La Clave del Sistema</h4>
+                    <p>Esta tabla permite rastrear pagos parciales y múltiples pagos:</p>
+                    <p><strong>Ejemplo:</strong> Una factura de $1,000 puede tener:</p>
+                    <ul>
+                        <li><i class="fas fa-arrow-right"></i> Pago 1: $400 el 15/01/2025 → <code>nextdate = '2025-01-15'</code></li>
+                        <li><i class="fas fa-arrow-right"></i> Pago 2: $300 el 20/01/2025 → <code>nextdate = '2025-01-20'</code></li>
+                        <li><i class="fas fa-arrow-right"></i> Pago 3: $300 el 05/02/2025 → <code>nextdate = '2025-02-05'</code></li>
+                    </ul>
+                    <p><strong>Para saber el saldo al 31/01/2025:</strong> Solo sumamos pagos donde <code>nextdate <= '2025-01-31'</code></p>
+                    <p>Saldo = $1,000 - ($400 + $300) = <strong>$300</strong> <i class="fas fa-check-circle" style="color: var(--success);"></i></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: Diagramas y Flujo -->
+        <div id="diagrama" class="tab-content">
+            <h2><i class="fas fa-project-diagram"></i> Diagramas de Relaciones y Flujo del Sistema</h2>
+
+            <!-- Diagrama 1: Relaciones entre Tablas -->
+            <div class="diagram-container">
+                <h3 style="color: var(--aspaen-blue); margin-bottom: 1.5rem;"><i class="fas fa-database"></i> Diagrama de Relaciones entre Tablas</h3>
+                <p style="margin-bottom: 2rem;">Este diagrama muestra cómo se relacionan las tres tablas principales del sistema</p>
+
+                <div class="diagram-grid">
+                    <!-- Tabla Customer -->
+                    <div class="diagram-box" style="background: #e3f2fd;">
+                        <h4><i class="fas fa-users"></i> CUSTOMER</h4>
+                        <p style="font-size: 0.85rem; margin-top: 1rem; text-align: left;">
+                            <strong><i class="fas fa-key" style="color: #d4af37;"></i> id</strong> (PK)<br>
+                            entityid<br>
+                            companyname<br>
+                            email<br>
+                            phone
+                        </p>
+                    </div>
+
+                    <!-- Tabla Transaction -->
+                    <div class="diagram-box" style="background: #fff3cd;">
+                        <h4><i class="fas fa-file-invoice"></i> TRANSACTION</h4>
+                        <p style="font-size: 0.85rem; margin-top: 1rem; text-align: left;">
+                            <strong><i class="fas fa-key" style="color: #d4af37;"></i> id</strong> (PK)<br>
+                            <strong><i class="fas fa-link" style="color: #0056b3;"></i> entity</strong> (FK)<br>
+                            tranid<br>
+                            type<br>
+                            trandate<br>
+                            <strong>foreigntotal</strong> <i class="fas fa-star" style="color: #d4af37;"></i><br>
+                            foreignamountunpaid
+                        </p>
+                    </div>
+
+                    <!-- Tabla AppliedCredit -->
+                    <div class="diagram-box" style="background: #d4edda;">
+                        <h4><i class="fas fa-link"></i> APPLIED_CREDIT</h4>
+                        <p style="font-size: 0.85rem; margin-top: 1rem; text-align: left;">
+                            <strong><i class="fas fa-link" style="color: #0056b3;"></i> previousdoc</strong> (FK)<br>
+                            <strong><i class="fas fa-link" style="color: #0056b3;"></i> nextdoc</strong> (FK)<br>
+                            foreignamount<br>
+                            <strong>nextdate</strong> <i class="fas fa-bullseye" style="color: #dc3545;"></i><br>
+                            previoustype<br>
+                            nexttype
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Relaciones -->
+                <div style="background: white; padding: 2rem; border-radius: 8px; margin-top: 2rem;">
+                    <h4 style="color: var(--aspaen-blue); margin-bottom: 1rem;"><i class="fas fa-project-diagram"></i> Relaciones</h4>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="background: #f8f9fa; padding: 1rem; border-left: 4px solid var(--aspaen-blue); border-radius: 4px;">
+                            <strong>CUSTOMER</strong> <i class="fas fa-arrow-right" style="color: var(--aspaen-blue);"></i> <strong>TRANSACTION</strong>
+                            <p style="font-size: 0.9rem; margin-top: 0.5rem; color: #666;">
+                                Un cliente puede tener múltiples transacciones (1:N)<br>
+                                <code>Customer.id = Transaction.entity</code>
+                            </p>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 1rem; border-left: 4px solid var(--success); border-radius: 4px;">
+                            <strong>TRANSACTION</strong> <i class="fas fa-arrow-right" style="color: var(--success);"></i> <strong>APPLIED_CREDIT</strong>
+                            <p style="font-size: 0.9rem; margin-top: 0.5rem; color: #666;">
+                                Una transacción puede tener múltiples aplicaciones de crédito (1:N)<br>
+                                <code>Transaction.id = AppliedCredit.previousdoc</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diagrama 2: Flujo del Proceso de Cálculo -->
+            <div class="diagram-container" style="display: none;">
+                <h3 style="color: var(--aspaen-blue); margin-bottom: 1.5rem;"><i class="fas fa-stream"></i> Flujo del Proceso de Cálculo Histórico</h3>
+                <p style="margin-bottom: 2rem;">Proceso paso a paso para calcular el saldo de cartera en una fecha pasada</p>
+
+                <div class="diagram-flow" style="background: white; padding: 2rem; border-radius: 8px;">
+                    <!-- Paso 1: Inicio -->
+                    <div class="diagram-box" style="background: linear-gradient(135deg, #003d82, #0056b3); color: white; border: none;">
+                        <i class="fas fa-play-circle" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                        <h4 style="color: white;">Paso 1: Definir Fecha de Corte</h4>
+                        <p style="margin: 0;">Ejemplo: 31 de Enero 2025</p>
+                    </div>
+
+                    <div class="diagram-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                    <!-- Paso 2: Seleccionar Facturas -->
+                    <div class="diagram-box" style="background: #e3f2fd;">
+                        <h4><i class="fas fa-filter"></i> Paso 2: Filtrar Facturas</h4>
+                        <p style="margin: 0; font-size: 0.9rem;">
+                            <code>WHERE type = 'CustInvc' AND trandate <= @FechaCorte</code>
+                        </p>
+                    </div>
+
+                    <div class="diagram-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                    <!-- Paso 3: Obtener Monto Original -->
+                    <div class="diagram-box" style="background: #fff3cd;">
+                        <h4><i class="fas fa-dollar-sign"></i> Paso 3: Obtener Monto Original</h4>
+                        <p style="margin: 0; font-weight: 700; font-size: 1.2rem;">foreigntotal = $1,000</p>
+                    </div>
+
+                    <div class="diagram-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                    <!-- Paso 4: Buscar Pagos Aplicados -->
+                    <div class="diagram-box" style="background: #d4edda;">
+                        <h4><i class="fas fa-search"></i> Paso 4: Buscar Pagos en AppliedCredit</h4>
+                        <p style="margin: 0; font-size: 0.9rem;">
+                            Tabla: AppliedCreditTransactionLineLink
+                        </p>
+                    </div>
+
+                    <div class="diagram-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                    <!-- Paso 5: Filtrar por Fecha -->
+                    <div class="diagram-box" style="background: #fce4ec;">
+                        <h4><i class="fas fa-calendar-check"></i> Paso 5: Filtrar por Fecha de Aplicación</h4>
+                        <p style="margin: 0; font-size: 0.9rem;">
+                            Solo pagos donde <code>nextdate <= '2025-01-31'</code>
+                        </p>
+                    </div>
+
+                    <div class="diagram-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                    <!-- Paso 6: Resultado de Filtro -->
+                    <div class="diagram-row">
+                        <div class="diagram-box" style="background: #d4edda; border: 2px solid #28a745; max-width: 200px;">
+                            <i class="fas fa-check-circle" style="color: #28a745; font-size: 1.5rem;"></i>
+                            <p style="margin: 0.5rem 0 0 0;"><strong>Pago 1</strong></p>
+                            <p style="margin: 0; font-size: 0.9rem;">$400</p>
+                            <p style="margin: 0; font-size: 0.8rem; color: #155724;">20-Ene-2025 <i class="fas fa-check-circle"></i></p>
+                        </div>
+                        <div class="diagram-box" style="background: #d4edda; border: 2px solid #28a745; max-width: 200px;">
+                            <i class="fas fa-check-circle" style="color: #28a745; font-size: 1.5rem;"></i>
+                            <p style="margin: 0.5rem 0 0 0;"><strong>Pago 2</strong></p>
+                            <p style="margin: 0; font-size: 0.9rem;">$300</p>
+                            <p style="margin: 0; font-size: 0.8rem; color: #155724;">20-Ene-2025 <i class="fas fa-check-circle"></i></p>
+                        </div>
+                        <div class="diagram-box" style="background: #f8d7da; border: 2px dashed #dc3545; max-width: 200px; opacity: 0.7;">
+                            <i class="fas fa-times-circle" style="color: #dc3545; font-size: 1.5rem;"></i>
+                            <p style="margin: 0.5rem 0 0 0;"><strong>Pago 3</strong></p>
+                            <p style="margin: 0; font-size: 0.9rem;">$300</p>
+                            <p style="margin: 0; font-size: 0.8rem; color: #721c24;">05-Feb-2025 <i class="fas fa-times-circle"></i></p>
+                            <p style="margin: 0; font-size: 0.7rem; color: #721c24;">NO SE INCLUYE</p>
+                        </div>
+                    </div>
+
+                    <div class="diagram-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                    <!-- Paso 7: Sumar Pagos -->
+                    <div class="diagram-box" style="background: #e1f5fe;">
+                        <h4><i class="fas fa-calculator"></i> Paso 6: Sumar Pagos Válidos</h4>
+                        <p style="margin: 0; font-size: 1.1rem;">$400 + $300 = <strong>$700</strong></p>
+                    </div>
+
+                    <div class="diagram-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                    <!-- Paso 8: Calcular Saldo -->
+                    <div class="diagram-box" style="background: linear-gradient(135deg, #d4af37, #c9a335); color: white; border: none;">
+                        <h4 style="color: white;"><i class="fas fa-equals"></i> Paso 7: Calcular Saldo Histórico</h4>
+                        <p style="margin: 0.5rem 0; font-size: 1.2rem; font-weight: 700;">
+                            $1,000 - $700 = $300
+                        </p>
+                    </div>
+
+                    <div class="diagram-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                    <!-- Resultado Final -->
+                    <div class="diagram-box" style="background: linear-gradient(135deg, #28a745, #218838); color: white; border: none; padding: 2rem;">
+                        <i class="fas fa-trophy" style="font-size: 2.5rem; margin-bottom: 0.5rem;"></i>
+                        <h4 style="color: white; font-size: 1.3rem;">Resultado Final</h4>
+                        <p style="margin: 0.5rem 0 0 0; font-size: 1.5rem; font-weight: 700;">
+                            Saldo al 31-Ene-2025: $300.00
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diagrama 3: Ejemplo Visual Detallado - Timeline CSS -->
+            <div class="diagram-container">
+                <h3 style="color: var(--aspaen-blue); margin-bottom: 1.5rem;"><i class="fas fa-calculator"></i> Ejemplo Visual: Evolución del Saldo</h3>
+                <p style="margin-bottom: 2rem;">Cómo evoluciona el saldo de una factura con pagos parciales en el tiempo</p>
+
+                <!-- Timeline CSS personalizado -->
+                <div style="background: white; padding: 2rem; border-radius: 8px; margin: 2rem 0;">
+                    <div style="position: relative; padding-left: 40px;">
+                        <!-- Línea vertical -->
+                        <div style="position: absolute; left: 20px; top: 0; bottom: 0; width: 3px; background: #003d82;"></div>
+
+                        <!-- Evento 1: Factura emitida -->
+                        <div style="position: relative; margin-bottom: 2rem; padding-left: 1rem;">
+                            <div style="position: absolute; left: -1.8rem; top: 0; width: 20px; height: 20px; border-radius: 50%; background: #003d82; border: 3px solid white;"></div>
+                            <div style="background: #e3f2fd; padding: 1rem; border-radius: 8px; border-left: 4px solid #003d82;">
+                                <strong style="color: #003d82;">15 Enero 2025</strong>
+                                <p style="margin: 0.5rem 0 0 0;"><i class="fas fa-file-invoice" style="color: #003d82;"></i> Factura FAC-001 emitida por <strong>$1,000.00</strong></p>
+                                <p style="margin: 0.3rem 0 0 0; color: #666; font-size: 0.9rem;">Saldo inicial: $1,000.00</p>
+                            </div>
+                        </div>
+
+                        <!-- Evento 2: Pago 1 -->
+                        <div style="position: relative; margin-bottom: 2rem; padding-left: 1rem;">
+                            <div style="position: absolute; left: -1.8rem; top: 0; width: 20px; height: 20px; border-radius: 50%; background: #28a745; border: 3px solid white;"></div>
+                            <div style="background: #d4edda; padding: 1rem; border-radius: 8px; border-left: 4px solid #28a745;">
+                                <strong style="color: #155724;">20 Enero 2025</strong>
+                                <p style="margin: 0.5rem 0 0 0;"><i class="fas fa-money-bill-wave" style="color: #28a745;"></i> Pago 1 aplicado: <strong>$400.00</strong></p>
+                                <p style="margin: 0.3rem 0 0 0; color: #155724; font-weight: 600;">Saldo restante: $600.00</p>
+                            </div>
+                        </div>
+
+                        <!-- Evento 3: Pago 2 -->
+                        <div style="position: relative; margin-bottom: 2rem; padding-left: 1rem;">
+                            <div style="position: absolute; left: -1.8rem; top: 0; width: 20px; height: 20px; border-radius: 50%; background: #28a745; border: 3px solid white;"></div>
+                            <div style="background: #d4edda; padding: 1rem; border-radius: 8px; border-left: 4px solid #28a745;">
+                                <strong style="color: #155724;">20 Enero 2025</strong>
+                                <p style="margin: 0.5rem 0 0 0;"><i class="fas fa-money-bill-wave" style="color: #28a745;"></i> Pago 2 aplicado: <strong>$300.00</strong></p>
+                                <p style="margin: 0.3rem 0 0 0; color: #155724; font-weight: 600;">Saldo restante: $300.00</p>
+                            </div>
+                        </div>
+
+                        <!-- Fecha de Corte -->
+                        <div style="position: relative; margin-bottom: 2rem; padding-left: 1rem;">
+                            <div style="position: absolute; left: -1.8rem; top: 0; width: 20px; height: 20px; border-radius: 50%; background: #d4af37; border: 3px solid white;"></div>
+                            <div style="background: #fff3cd; padding: 1rem; border-radius: 8px; border-left: 4px solid #d4af37; border: 2px solid #d4af37;">
+                                <strong style="color: #856404;">31 Enero 2025 - FECHA DE CORTE</strong>
+                                <p style="margin: 0.5rem 0 0 0; font-size: 1.2rem; font-weight: 700; color: #856404;">
+                                    <i class="fas fa-bullseye" style="color: #856404;"></i> Saldo Histórico: <span style="color: #d4af37;">$300.00</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Evento 4: Pago 3 (NO incluido) -->
+                        <div style="position: relative; margin-bottom: 0; padding-left: 1rem; opacity: 0.6;">
+                            <div style="position: absolute; left: -1.8rem; top: 0; width: 20px; height: 20px; border-radius: 50%; background: #dc3545; border: 3px solid white;"></div>
+                            <div style="background: #f8d7da; padding: 1rem; border-radius: 8px; border-left: 4px solid #dc3545; border: 2px dashed #dc3545;">
+                                <strong style="color: #721c24;">05 Febrero 2025</strong>
+                                <p style="margin: 0.5rem 0 0 0;"><i class="fas fa-times-circle" style="color: #dc3545;"></i> Pago 3: $300.00 <span style="background: #dc3545; color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem;">POSTERIOR AL CORTE - NO SE INCLUYE</span></p>
+                                <p style="margin: 0.3rem 0 0 0; color: #721c24;">Saldo final: $0.00 (pero no relevante para consulta histórica)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 2rem; text-align: left;">
+                    <h4><i class="fas fa-info-circle"></i> Interpretación del Timeline</h4>
+                    <ul>
+                        <li><i class="fas fa-circle"></i> <strong>15-Ene-2025:</strong> Factura emitida por $1,000</li>
+                        <li><i class="fas fa-circle"></i> <strong>20-Ene-2025:</strong> Se aplican dos pagos: $400 y $300 (total $700)</li>
+                        <li><i class="fas fa-star" style="color: #d4af37;"></i> <strong>31-Ene-2025 (Fecha de Corte):</strong> Saldo = $1,000 - $700 = <strong>$300</strong></li>
+                        <li><i class="fas fa-times-circle" style="color: #dc3545;"></i> <strong>05-Feb-2025:</strong> Pago final de $300 (posterior a la fecha de corte, NO se incluye)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Diagrama 4: Arquitectura Técnica SQL -->
+            <div class="diagram-container">
+                <h3 style="color: var(--aspaen-blue); margin-bottom: 1.5rem;"><i class="fas fa-code"></i> Arquitectura Técnica de la Consulta SQL</h3>
+                <p style="margin-bottom: 2rem;">Flujo de JOINs y subconsultas para obtener la cartera histórica</p>
+
+                <div style="background: white; padding: 2rem; border-radius: 8px;">
+                    <!-- Paso 1: Tablas Base -->
+                    <div class="diagram-row" style="margin-bottom: 2rem;">
+                        <div class="diagram-box" style="background: #e3f2fd; max-width: 250px;">
+                            <i class="fas fa-database" style="font-size: 1.5rem; color: var(--aspaen-blue);"></i>
+                            <h4>Transaction_Local</h4>
+                            <p style="font-size: 0.85rem; margin: 0;">Tabla de Facturas</p>
+                        </div>
+                        <div class="diagram-box" style="background: #e3f2fd; max-width: 250px;">
+                            <i class="fas fa-database" style="font-size: 1.5rem; color: var(--aspaen-blue);"></i>
+                            <h4>Customer_Local</h4>
+                            <p style="font-size: 0.85rem; margin: 0;">Tabla de Clientes</p>
+                        </div>
+                    </div>
+
+                    <div class="diagram-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                    <!-- Paso 2: INNER JOIN -->
+                    <div class="diagram-box" style="background: linear-gradient(135deg, #0056b3, #003d82); color: white; border: none; margin: 1rem auto; max-width: 400px;">
+                        <h4 style="color: white;"><i class="fas fa-link"></i> INNER JOIN</h4>
+                        <p style="margin: 0; font-size: 0.9rem;">Factura.entity = Customer.id</p>
+                    </div>
+
+                    <div class="diagram-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                    <!-- Paso 3: Resultado INNER JOIN -->
+                    <div class="diagram-box" style="background: #fff3cd; margin: 1rem auto; max-width: 400px;">
+                        <h4><i class="fas fa-file-invoice"></i> Factura + Cliente</h4>
+                        <p style="font-size: 0.85rem; margin: 0;">Datos combinados de factura y cliente</p>
+                    </div>
+
+                    <div class="diagram-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                    <!-- Paso 4: LEFT JOIN con AppliedCredit -->
+                    <div class="diagram-row">
+                        <div class="diagram-box" style="background: #fff3cd; max-width: 250px;">
+                            <p style="margin: 0;"><strong>Datos anteriores</strong></p>
+                        </div>
+                        <div style="display: flex; align-items: center; padding: 0 1rem;">
+                            <span style="font-size: 1.5rem; color: var(--aspaen-blue);">+</span>
+                        </div>
+                        <div class="diagram-box" style="background: #e3f2fd; max-width: 250px;">
+                            <i class="fas fa-database" style="font-size: 1.5rem; color: var(--aspaen-blue);"></i>
+                            <h4>AppliedCredit_Local</h4>
+                            <p style="font-size: 0.85rem; margin: 0;">Tabla de Pagos</p>
+                        </div>
+                    </div>
+
+                    <div class="diagram-arrow" style="margin-top: 1rem;"><i class="fas fa-arrow-down"></i></div>
+
+                    <!-- Paso 5: LEFT JOIN -->
+                    <div class="diagram-box" style="background: linear-gradient(135deg, #0056b3, #003d82); color: white; border: none; margin: 1rem auto; max-width: 400px;">
+                        <h4 style="color: white;"><i class="fas fa-link"></i> LEFT JOIN</h4>
+                        <p style="margin: 0; font-size: 0.9rem;">AppliedCredit.previousdoc = Factura.id</p>
+                    </div>
+
+                    <div class="diagram-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                    <!-- Paso 6: Subconsultas -->
+                    <div class="diagram-row" style="margin: 1.5rem 0;">
+                        <div class="diagram-box" style="background: #d4edda; max-width: 280px;">
+                            <h4><i class="fas fa-calculator"></i> Subconsulta 1</h4>
+                            <p style="font-size: 0.85rem; margin: 0;">
+                                SUM(Pagos)<br>
+                                WHERE nextdate <= @FechaCorte<br>
+                                AND nexttype = 'CustPymt'
+                            </p>
+                        </div>
+                        <div class="diagram-box" style="background: #d4edda; max-width: 280px;">
+                            <h4><i class="fas fa-calculator"></i> Subconsulta 2</h4>
+                            <p style="font-size: 0.85rem; margin: 0;">
+                                SUM(Créditos)<br>
+                                WHERE nextdate <= @FechaCorte<br>
+                                AND nexttype = 'CustCred'
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="diagram-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                    <!-- Paso 7: Cálculo Final -->
+                    <div class="diagram-box" style="background: linear-gradient(135deg, #d4af37, #c9a335); color: white; border: none; margin: 1rem auto; max-width: 500px;">
+                        <h4 style="color: white;"><i class="fas fa-equals"></i> Cálculo Final</h4>
+                        <p style="margin: 0.5rem 0; font-size: 1rem;">
+                            foreigntotal - total_pagado - total_credito
+                        </p>
+                    </div>
+
+                    <div class="diagram-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                    <!-- Paso 8: WHERE -->
+                    <div class="diagram-box" style="background: #fce4ec; margin: 1rem auto; max-width: 400px;">
+                        <h4><i class="fas fa-filter"></i> WHERE</h4>
+                        <p style="font-size: 0.9rem; margin: 0;">
+                            Saldo > 0<br>
+                            <small>(Solo facturas con saldo pendiente)</small>
+                        </p>
+                    </div>
+
+                    <div class="diagram-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                    <!-- Resultado Final -->
+                    <div class="diagram-box" style="background: linear-gradient(135deg, #28a745, #218838); color: white; border: none; padding: 2rem; margin: 1rem auto; max-width: 450px;">
+                        <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                        <h4 style="color: white; font-size: 1.3rem;">Resultado</h4>
+                        <p style="margin: 0; font-size: 1.1rem;">Cartera Histórica a Fecha Específica</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fórmula General -->
+            <div class="highlight-box" style="margin-top: 3rem;">
+                <h4><i class="fas fa-chart-bar"></i> Fórmula General del Cálculo</h4>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-title">Cálculo de Cartera Histórica</span>
+                    </div>
+                    <pre>
+<span class="keyword">SALDO</span> a fecha X =
+    <span class="keyword">MONTO_FACTURADO</span> (foreigntotal)
+    - <span class="keyword">SUM</span>(pagos <span class="keyword">WHERE</span> nextdate <= fecha_X <span class="keyword">AND</span> nexttype = <span class="string">'CustPymt'</span>)
+    - <span class="keyword">SUM</span>(créditos <span class="keyword">WHERE</span> nextdate <= fecha_X <span class="keyword">AND</span> nexttype = <span class="string">'CustCred'</span>)
+                    </pre>
+                </div>
+                <p style="margin-top: 1.5rem;"><strong>Puntos Clave:</strong></p>
+                <ul>
+                    <li><i class="fas fa-star"></i> <code>foreigntotal</code> es el valor inmutable de la factura original</li>
+                    <li><i class="fas fa-calendar-check"></i> <code>nextdate</code> determina si un pago se incluye en el cálculo histórico</li>
+                    <li><i class="fas fa-filter"></i> Solo se suman pagos y créditos aplicados <strong>hasta la fecha de corte</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB 3: Migración de Datos -->
+        <div id="migracion" class="tab-content">
+            <h2><i class="fas fa-database"></i> Migración de Datos desde NetSuite</h2>
+            
+            <p style="margin-bottom: 2rem;">Para optimizar las consultas y evitar timeouts, se recomienda migrar las tablas de NetSuite a una base de datos local SQL Server.</p>
+
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4><i class="fas fa-cog"></i> Configurar Timeout del Linked Server</h4>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">SQL</span>
+                            <button class="copy-button" onclick="copyCode(this)"><i class="far fa-copy"></i> Copiar</button>
+                        </div>
+                        <pre><code><span class="comment">-- Aumentar timeout a ilimitado (0)</span>
+<span class="keyword">EXEC</span> <span class="function">sp_serveroption</span> <span class="string">'NETSUITE'</span>, <span class="string">'query timeout'</span>, <span class="string">'0'</span>;
+
+<span class="comment">-- Verificar configuración</span>
+<span class="keyword">EXEC</span> <span class="function">sp_helpserver</span> <span class="string">'NETSUITE'</span>;</code></pre>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4><i class="fas fa-table"></i> Crear Tablas Locales</h4>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">SQL - Estructura de Tablas</span>
+                            <button class="copy-button" onclick="copyCode(this)"><i class="far fa-copy"></i> Copiar</button>
+                        </div>
+                        <pre><code><span class="comment">-- Tabla Transaction local</span>
+<span class="keyword">CREATE TABLE</span> [Transaction_Local] (
+    id <span class="keyword">BIGINT</span>,
+    tranid <span class="keyword">NVARCHAR</span>(<span class="number">138</span>),
+    type <span class="keyword">NVARCHAR</span>(<span class="number">8</span>),
+    entity <span class="keyword">BIGINT</span>,
+    trandate <span class="keyword">DATETIME2</span>,
+    duedate <span class="keyword">DATETIME2</span>,
+    foreigntotal <span class="keyword">FLOAT</span>,
+    foreignamountpaid <span class="keyword">FLOAT</span>,
+    foreignamountunpaid <span class="keyword">FLOAT</span>,
+    status <span class="keyword">NCHAR</span>(<span class="number">1</span>)
+);
+
+<span class="comment">-- Tabla Customer local</span>
+<span class="keyword">CREATE TABLE</span> [Customer_Local] (
+    id <span class="keyword">BIGINT</span>,
+    entityid <span class="keyword">NVARCHAR</span>(<span class="number">255</span>),
+    companyname <span class="keyword">NVARCHAR</span>(<span class="number">255</span>),
+    email <span class="keyword">NVARCHAR</span>(<span class="number">256</span>),
+    phone <span class="keyword">NVARCHAR</span>(<span class="number">100</span>)
+);
+
+<span class="comment">-- Tabla AppliedCredit local</span>
+<span class="keyword">CREATE TABLE</span> [AppliedCredit_Local] (
+    previousdoc <span class="keyword">BIGINT</span>,
+    nextdoc <span class="keyword">BIGINT</span>,
+    foreignamount <span class="keyword">FLOAT</span>,
+    previousdate <span class="keyword">DATETIME2</span>,
+    nextdate <span class="keyword">DATETIME2</span>,
+    previoustype <span class="keyword">NVARCHAR</span>(<span class="number">12</span>),
+    nexttype <span class="keyword">NVARCHAR</span>(<span class="number">12</span>)
+);</code></pre>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4><i class="fas fa-cloud-download-alt"></i> Migrar Datos (Script Completo)</h4>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">SQL - Script de Migración</span>
+                            <button class="copy-button" onclick="copyCode(this)"><i class="far fa-copy"></i> Copiar</button>
+                        </div>
+                        <pre><code><span class="keyword">SET NOCOUNT ON</span>;
+<span class="keyword">DECLARE</span> @InicioTotal <span class="keyword">DATETIME2</span> = <span class="function">SYSDATETIME</span>();
+<span class="keyword">DECLARE</span> @sql <span class="keyword">NVARCHAR</span>(<span class="keyword">MAX</span>), @cols <span class="keyword">NVARCHAR</span>(<span class="number">1000</span>);
+
+<span class="function">PRINT</span> <span class="string">'Iniciando migración...'</span>;
+
+<span class="comment">-- 1. TRANSACTION (solo cartera: facturas, pagos, créditos)</span>
+<span class="keyword">SET</span> @cols = <span class="string">'id, tranid, type, entity, trandate, duedate, foreigntotal, foreignamountpaid, foreignamountunpaid, status'</span>;
+<span class="keyword">SET</span> @sql = <span class="string">N'
+    INSERT INTO [Transaction_Local] ('</span> + @cols + <span class="string">')
+    SELECT '</span> + @cols + <span class="string">'
+    FROM OPENQUERY(NETSUITE, 
+        ''SELECT '</span> + @cols + <span class="string">'
+          FROM [ASP Conexión ODBC].Transaction
+          WHERE type IN (''''CustInvc'''', ''''CustPymt'''', ''''CustCred'''')''
+    );
+'</span>;
+<span class="keyword">EXEC</span> <span class="function">sp_executesql</span> @sql;
+<span class="function">PRINT</span> <span class="string">'OK:Transaction: '</span> + <span class="function">CAST</span>(@@ROWCOUNT <span class="keyword">AS VARCHAR</span>);
+
+<span class="comment">-- 2. CUSTOMER</span>
+<span class="keyword">SET</span> @cols = <span class="string">'id, entityid, companyname, email, phone'</span>;
+<span class="keyword">SET</span> @sql = <span class="string">N'
+    INSERT INTO [Customer_Local] ('</span> + @cols + <span class="string">')
+    SELECT '</span> + @cols + <span class="string">'
+    FROM OPENQUERY(NETSUITE, 
+        ''SELECT '</span> + @cols + <span class="string">' FROM [ASP Conexión ODBC].Customer''
+    );
+'</span>;
+<span class="keyword">EXEC</span> <span class="function">sp_executesql</span> @sql;
+<span class="function">PRINT</span> <span class="string">'OK:Customer: '</span> + <span class="function">CAST</span>(@@ROWCOUNT <span class="keyword">AS VARCHAR</span>);
+
+<span class="comment">-- 3. APPLIED CREDIT (solo vínculos de facturas-pagos)</span>
+<span class="keyword">SET</span> @cols = <span class="string">'previousdoc, nextdoc, foreignamount, previousdate, nextdate, previoustype, nexttype'</span>;
+<span class="keyword">SET</span> @sql = <span class="string">N'
+    INSERT INTO [AppliedCredit_Local] ('</span> + @cols + <span class="string">')
+    SELECT '</span> + @cols + <span class="string">'
+    FROM OPENQUERY(NETSUITE, 
+        ''SELECT '</span> + @cols + <span class="string">'
+          FROM [ASP Conexión ODBC].AppliedCreditTransactionLineLink
+          WHERE previoustype = ''''CustInvc'''' 
+            AND nexttype IN (''''CustPymt'''', ''''CustCred'''')''
+    );
+'</span>;
+<span class="keyword">EXEC</span> <span class="function">sp_executesql</span> @sql;
+<span class="function">PRINT</span> <span class="string">'OK:AppliedCredit: '</span> + <span class="function">CAST</span>(@@ROWCOUNT <span class="keyword">AS VARCHAR</span>);
+
+<span class="comment">-- 4. CREAR ÍNDICES para optimizar consultas</span>
+<span class="keyword">CREATE INDEX</span> idx_trans_type <span class="keyword">ON</span> [Transaction_Local](type);
+<span class="keyword">CREATE INDEX</span> idx_trans_entity <span class="keyword">ON</span> [Transaction_Local](entity);
+<span class="keyword">CREATE INDEX</span> idx_trans_date <span class="keyword">ON</span> [Transaction_Local](trandate);
+<span class="keyword">CREATE INDEX</span> idx_applied_prev <span class="keyword">ON</span> [AppliedCredit_Local](previousdoc);
+<span class="keyword">CREATE INDEX</span> idx_applied_next <span class="keyword">ON</span> [AppliedCredit_Local](nextdoc);
+
+<span class="function">PRINT</span> <span class="string">'OK:Migración completada'</span>;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 2rem;">
+                <h4><i class="fas fa-bolt"></i> Optimización</h4>
+                <p><strong>Tiempos estimados:</strong></p>
+                <ul>
+                    <li><i class="fas fa-clock"></i> Transaction (241,519 facturas): ~5-10 minutos</li>
+                    <li><i class="fas fa-clock"></i> Customer: ~2-3 minutos</li>
+                    <li><i class="fas fa-clock"></i> AppliedCredit: ~3-5 minutos</li>
+                </ul>
+                <p><strong>Recomendación:</strong> Ejecutar en horarios de bajo tráfico. Una vez migrado, las consultas serán instantáneas.</p>
+            </div>
+        </div>
+
+        <!-- TAB 4: Queries de Consulta -->
+        <div id="queries" class="tab-content">
+            <h2><i class="fas fa-code"></i> Queries de Consulta de Cartera</h2>
+
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h4><i class="fas fa-search"></i> Query Principal: Cartera a Fecha Específica</h4>
+                <p>Este query calcula el saldo de cartera exacto a cualquier fecha histórica</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-title">SQL - Cartera Histórica</span>
+                        <button class="copy-button" onclick="copyCode(this)"><i class="far fa-copy"></i> Copiar</button>
+                    </div>
+                    <pre><code><span class="comment">-- ============================================
+-- CARTERA HISTÓRICA A FECHA ESPECÍFICA
+-- ============================================</span>
+
+<span class="keyword">DECLARE</span> @FechaCorte <span class="keyword">DATE</span> = <span class="string">'2025-11-01'</span>;  <span class="comment">-- CAMBIAR SEGÚN NECESIDAD</span>
+
+<span class="keyword">SELECT</span> 
+    f.tranid <span class="keyword">AS</span> numero_factura,
+    f.trandate <span class="keyword">AS</span> fecha_factura,
+    f.duedate <span class="keyword">AS</span> fecha_vencimiento,
+    cust.entityid <span class="keyword">AS</span> codigo_cliente,
+    cust.companyname <span class="keyword">AS</span> nombre_cliente,
+    cust.email,
+    cust.phone,
+    
+    <span class="comment">-- Montos</span>
+    f.foreigntotal <span class="keyword">AS</span> monto_facturado,
+    <span class="function">ISNULL</span>(pagos.total_pagado, <span class="number">0</span>) <span class="keyword">AS</span> total_pagado_hasta_fecha,
+    <span class="function">ISNULL</span>(creditos.total_credito, <span class="number">0</span>) <span class="keyword">AS</span> total_creditos_hasta_fecha,
+    
+    <span class="comment">-- SALDO A LA FECHA DE CORTE</span>
+    f.foreigntotal - <span class="function">ISNULL</span>(pagos.total_pagado, <span class="number">0</span>) - <span class="function">ISNULL</span>(creditos.total_credito, <span class="number">0</span>) 
+        <span class="keyword">AS</span> saldo_cartera_fecha_corte,
+    
+    <span class="comment">-- Comparación con saldo actual</span>
+    f.foreignamountunpaid <span class="keyword">AS</span> saldo_actual_netsuite,
+    
+    <span class="comment">-- Días de vencimiento</span>
+    <span class="keyword">CASE</span> 
+        <span class="keyword">WHEN</span> f.duedate < @FechaCorte 
+        <span class="keyword">THEN</span> <span class="function">DATEDIFF</span>(<span class="keyword">DAY</span>, f.duedate, @FechaCorte)
+        <span class="keyword">ELSE</span> <span class="number">0</span>
+    <span class="keyword">END</span> <span class="keyword">AS</span> dias_vencido_a_fecha_corte,
+    
+    <span class="comment">-- Clasificación de antigüedad</span>
+    <span class="keyword">CASE</span> 
+        <span class="keyword">WHEN</span> f.duedate >= @FechaCorte <span class="keyword">THEN</span> <span class="string">'Por vencer'</span>
+        <span class="keyword">WHEN</span> <span class="function">DATEDIFF</span>(<span class="keyword">DAY</span>, f.duedate, @FechaCorte) <span class="keyword">BETWEEN</span> <span class="number">1</span> <span class="keyword">AND</span> <span class="number">30</span> <span class="keyword">THEN</span> <span class="string">'1-30 días'</span>
+        <span class="keyword">WHEN</span> <span class="function">DATEDIFF</span>(<span class="keyword">DAY</span>, f.duedate, @FechaCorte) <span class="keyword">BETWEEN</span> <span class="number">31</span> <span class="keyword">AND</span> <span class="number">60</span> <span class="keyword">THEN</span> <span class="string">'31-60 días'</span>
+        <span class="keyword">WHEN</span> <span class="function">DATEDIFF</span>(<span class="keyword">DAY</span>, f.duedate, @FechaCorte) <span class="keyword">BETWEEN</span> <span class="number">61</span> <span class="keyword">AND</span> <span class="number">90</span> <span class="keyword">THEN</span> <span class="string">'61-90 días'</span>
+        <span class="keyword">WHEN</span> <span class="function">DATEDIFF</span>(<span class="keyword">DAY</span>, f.duedate, @FechaCorte) > <span class="number">90</span> <span class="keyword">THEN</span> <span class="string">'Más de 90 días'</span>
+    <span class="keyword">END</span> <span class="keyword">AS</span> categoria_vencimiento
+
+<span class="keyword">FROM</span> 
+    [Transaction_Local] f
+    
+<span class="keyword">INNER JOIN</span> 
+    [Customer_Local] cust <span class="keyword">ON</span> f.entity = cust.id
+    
+<span class="comment">-- Pagos aplicados hasta la fecha de corte</span>
+<span class="keyword">LEFT JOIN</span> (
+    <span class="keyword">SELECT</span> 
+        acl.previousdoc <span class="keyword">AS</span> factura_id,
+        <span class="function">SUM</span>(acl.foreignamount) <span class="keyword">AS</span> total_pagado
+    <span class="keyword">FROM</span> [AppliedCredit_Local] acl
+    <span class="keyword">WHERE</span> acl.previoustype = <span class="string">'CustInvc'</span>
+      <span class="keyword">AND</span> acl.nexttype = <span class="string">'CustPymt'</span>
+      <span class="keyword">AND</span> acl.nextdate <= @FechaCorte  <span class="comment">-- FILTRO CLAVE</span>
+    <span class="keyword">GROUP BY</span> acl.previousdoc
+) pagos <span class="keyword">ON</span> f.id = pagos.factura_id
+
+<span class="comment">-- Notas crédito aplicadas hasta la fecha de corte</span>
+<span class="keyword">LEFT JOIN</span> (
+    <span class="keyword">SELECT</span> 
+        acl.previousdoc <span class="keyword">AS</span> factura_id,
+        <span class="function">SUM</span>(acl.foreignamount) <span class="keyword">AS</span> total_credito
+    <span class="keyword">FROM</span> [AppliedCredit_Local] acl
+    <span class="keyword">WHERE</span> acl.previoustype = <span class="string">'CustInvc'</span>
+      <span class="keyword">AND</span> acl.nexttype = <span class="string">'CustCred'</span>
+      <span class="keyword">AND</span> acl.nextdate <= @FechaCorte  <span class="comment">-- FILTRO CLAVE</span>
+    <span class="keyword">GROUP BY</span> acl.previousdoc
+) creditos <span class="keyword">ON</span> f.id = creditos.factura_id
+
+<span class="keyword">WHERE</span> 
+    f.type = <span class="string">'CustInvc'</span>  <span class="comment">-- Solo facturas</span>
+    <span class="keyword">AND</span> f.trandate <= @FechaCorte  <span class="comment">-- Facturas emitidas hasta la fecha</span>
+    <span class="keyword">AND</span> f.foreigntotal - <span class="function">ISNULL</span>(pagos.total_pagado, <span class="number">0</span>) - <span class="function">ISNULL</span>(creditos.total_credito, <span class="number">0</span>) > <span class="number">0.01</span>
+
+<span class="keyword">ORDER BY</span> 
+    cust.companyname, 
+    f.trandate;</code></pre>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h4><i class="fas fa-chart-pie"></i> Resumen por Cliente (Análisis de Antigüedad)</h4>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-title">SQL - Resumen por Cliente</span>
+                        <button class="copy-button" onclick="copyCode(this)"><i class="far fa-copy"></i> Copiar</button>
+                    </div>
+                    <pre><code><span class="keyword">DECLARE</span> @FechaCorte <span class="keyword">DATE</span> = <span class="string">'2025-11-01'</span>;
+
+<span class="keyword">SELECT</span> 
+    cust.entityid <span class="keyword">AS</span> codigo_cliente,
+    cust.companyname <span class="keyword">AS</span> nombre_cliente,
+    <span class="function">COUNT</span>(f.id) <span class="keyword">AS</span> cantidad_facturas_pendientes,
+    
+    <span class="comment">-- Total por antigüedad</span>
+    <span class="function">SUM</span>(<span class="keyword">CASE WHEN</span> f.duedate >= @FechaCorte <span class="keyword">THEN</span> saldo.saldo <span class="keyword">ELSE</span> <span class="number">0</span> <span class="keyword">END</span>) <span class="keyword">AS</span> por_vencer,
+    <span class="function">SUM</span>(<span class="keyword">CASE WHEN</span> <span class="function">DATEDIFF</span>(<span class="keyword">DAY</span>, f.duedate, @FechaCorte) <span class="keyword">BETWEEN</span> <span class="number">1</span> <span class="keyword">AND</span> <span class="number">30</span> <span class="keyword">THEN</span> saldo.saldo <span class="keyword">ELSE</span> <span class="number">0</span> <span class="keyword">END</span>) <span class="keyword">AS</span> de_1_a_30,
+    <span class="function">SUM</span>(<span class="keyword">CASE WHEN</span> <span class="function">DATEDIFF</span>(<span class="keyword">DAY</span>, f.duedate, @FechaCorte) <span class="keyword">BETWEEN</span> <span class="number">31</span> <span class="keyword">AND</span> <span class="number">60</span> <span class="keyword">THEN</span> saldo.saldo <span class="keyword">ELSE</span> <span class="number">0</span> <span class="keyword">END</span>) <span class="keyword">AS</span> de_31_a_60,
+    <span class="function">SUM</span>(<span class="keyword">CASE WHEN</span> <span class="function">DATEDIFF</span>(<span class="keyword">DAY</span>, f.duedate, @FechaCorte) <span class="keyword">BETWEEN</span> <span class="number">61</span> <span class="keyword">AND</span> <span class="number">90</span> <span class="keyword">THEN</span> saldo.saldo <span class="keyword">ELSE</span> <span class="number">0</span> <span class="keyword">END</span>) <span class="keyword">AS</span> de_61_a_90,
+    <span class="function">SUM</span>(<span class="keyword">CASE WHEN</span> <span class="function">DATEDIFF</span>(<span class="keyword">DAY</span>, f.duedate, @FechaCorte) > <span class="number">90</span> <span class="keyword">THEN</span> saldo.saldo <span class="keyword">ELSE</span> <span class="number">0</span> <span class="keyword">END</span>) <span class="keyword">AS</span> mas_de_90,
+    
+    <span class="comment">-- Total general</span>
+    <span class="function">SUM</span>(saldo.saldo) <span class="keyword">AS</span> saldo_total_cartera
+
+<span class="keyword">FROM</span> [Transaction_Local] f
+<span class="keyword">INNER JOIN</span> [Customer_Local] cust <span class="keyword">ON</span> f.entity = cust.id
+<span class="keyword">CROSS APPLY</span> (
+    <span class="keyword">SELECT</span> 
+        f.foreigntotal 
+        - <span class="function">ISNULL</span>((<span class="keyword">SELECT</span> <span class="function">SUM</span>(foreignamount) 
+                  <span class="keyword">FROM</span> [AppliedCredit_Local] 
+                  <span class="keyword">WHERE</span> previousdoc = f.id 
+                    <span class="keyword">AND</span> nexttype = <span class="string">'CustPymt'</span> 
+                    <span class="keyword">AND</span> nextdate <= @FechaCorte), <span class="number">0</span>)
+        - <span class="function">ISNULL</span>((<span class="keyword">SELECT</span> <span class="function">SUM</span>(foreignamount) 
+                  <span class="keyword">FROM</span> [AppliedCredit_Local] 
+                  <span class="keyword">WHERE</span> previousdoc = f.id 
+                    <span class="keyword">AND</span> nexttype = <span class="string">'CustCred'</span> 
+                    <span class="keyword">AND</span> nextdate <= @FechaCorte), <span class="number">0</span>) <span class="keyword">AS</span> saldo
+) saldo
+
+<span class="keyword">WHERE</span> f.type = <span class="string">'CustInvc'</span>
+  <span class="keyword">AND</span> f.trandate <= @FechaCorte
+  <span class="keyword">AND</span> saldo.saldo > <span class="number">0.01</span>
+
+<span class="keyword">GROUP BY</span> cust.entityid, cust.companyname
+<span class="keyword">ORDER BY</span> saldo_total_cartera <span class="keyword">DESC</span>;</code></pre>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h4><i class="fas fa-list"></i> Detalle de Pagos por Factura Específica</h4>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-title">SQL - Detalle de Pagos</span>
+                        <button class="copy-button" onclick="copyCode(this)"><i class="far fa-copy"></i> Copiar</button>
+                    </div>
+                    <pre><code><span class="keyword">DECLARE</span> @FacturaID <span class="keyword">BIGINT</span> = <span class="number">4005777</span>;  <span class="comment">-- ID de factura</span>
+<span class="keyword">DECLARE</span> @FechaCorte <span class="keyword">DATE</span> = <span class="string">'2025-11-01'</span>;
+
+<span class="comment">-- Datos de la factura</span>
+<span class="keyword">SELECT</span> 
+    f.tranid <span class="keyword">AS</span> numero_factura,
+    f.trandate <span class="keyword">AS</span> fecha_factura,
+    f.foreigntotal <span class="keyword">AS</span> monto_total,
+    f.foreignamountunpaid <span class="keyword">AS</span> saldo_actual_netsuite
+<span class="keyword">FROM</span> [Transaction_Local] f
+<span class="keyword">WHERE</span> f.id = @FacturaID;
+
+<span class="comment">-- Pagos aplicados (todos)</span>
+<span class="keyword">SELECT</span> 
+    <span class="string">'PAGO'</span> <span class="keyword">AS</span> tipo,
+    t.tranid <span class="keyword">AS</span> numero_documento,
+    acl.nextdate <span class="keyword">AS</span> fecha_aplicacion,
+    acl.foreignamount <span class="keyword">AS</span> monto,
+    <span class="keyword">CASE</span> 
+        <span class="keyword">WHEN</span> acl.nextdate <= @FechaCorte <span class="keyword">THEN</span> <span class="string">'SI - Aplicado a fecha corte'</span>
+        <span class="keyword">ELSE</span> <span class="string">'Posterior a fecha corte'</span>
+    <span class="keyword">END</span> <span class="keyword">AS</span> aplica_en_corte
+<span class="keyword">FROM</span> [AppliedCredit_Local] acl
+<span class="keyword">INNER JOIN</span> [Transaction_Local] t <span class="keyword">ON</span> acl.nextdoc = t.id
+<span class="keyword">WHERE</span> acl.previousdoc = @FacturaID
+  <span class="keyword">AND</span> acl.nexttype = <span class="string">'CustPymt'</span>
+<span class="keyword">ORDER BY</span> acl.nextdate;</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: Ejemplos de Resultados -->
+        <div id="ejemplos" class="tab-content">
+            <h2><i class="fas fa-table"></i> Ejemplos de Resultados Esperados</h2>
+            <p style="margin-bottom: 2rem;">Visualización de los resultados que obtendrías al ejecutar los queries principales del sistema</p>
+
+            <!-- Ejemplo 1: Query Principal -->
+            <div class="result-example">
+                <h4><i class="fas fa-chart-line"></i> Ejemplo 1: Cartera Histórica al 31 de Enero 2025</h4>
+                <p><strong>Query ejecutado:</strong> Cartera a Fecha Específica con <code>@FechaCorte = '2025-01-31'</code></p>
+
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>Factura</th>
+                            <th>Fecha Fact.</th>
+                            <th>Vencimiento</th>
+                            <th>Cliente</th>
+                            <th>Monto Facturado</th>
+                            <th>Pagado (hasta 31-Ene)</th>
+                            <th>Saldo al 31-Ene</th>
+                            <th>Días Vencido</th>
+                            <th>Categoría</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>FAC-001234</td>
+                            <td>2025-01-15</td>
+                            <td>2025-01-30</td>
+                            <td>Colegio San José</td>
+                            <td>$1,000.00</td>
+                            <td>$700.00</td>
+                            <td style="font-weight: 700; color: #d4af37;">$300.00</td>
+                            <td>1</td>
+                            <td><span class="badge badge-success">1-30 días</span></td>
+                        </tr>
+                        <tr>
+                            <td>FAC-001189</td>
+                            <td>2024-12-10</td>
+                            <td>2025-01-09</td>
+                            <td>Inst. María Auxiliadora</td>
+                            <td>$2,500.00</td>
+                            <td>$1,500.00</td>
+                            <td style="font-weight: 700; color: #d4af37;">$1,000.00</td>
+                            <td>22</td>
+                            <td><span class="badge badge-success">1-30 días</span></td>
+                        </tr>
+                        <tr>
+                            <td>FAC-001098</td>
+                            <td>2024-11-20</td>
+                            <td>2024-12-20</td>
+                            <td>Colegio Guadalupe</td>
+                            <td>$3,200.00</td>
+                            <td>$0.00</td>
+                            <td style="font-weight: 700; color: #d4af37;">$3,200.00</td>
+                            <td>42</td>
+                            <td><span class="badge badge-warning">31-60 días</span></td>
+                        </tr>
+                        <tr>
+                            <td>FAC-000956</td>
+                            <td>2024-10-05</td>
+                            <td>2024-11-04</td>
+                            <td>Academia Los Andes</td>
+                            <td>$1,800.00</td>
+                            <td>$500.00</td>
+                            <td style="font-weight: 700; color: #d4af37;">$1,300.00</td>
+                            <td>88</td>
+                            <td><span class="badge badge-warning">61-90 días</span></td>
+                        </tr>
+                        <tr>
+                            <td>FAC-000823</td>
+                            <td>2024-08-15</td>
+                            <td>2024-09-14</td>
+                            <td>Colegio La Esperanza</td>
+                            <td>$4,500.00</td>
+                            <td>$2,000.00</td>
+                            <td style="font-weight: 700; color: #dc3545;">$2,500.00</td>
+                            <td>139</td>
+                            <td><span class="badge" style="background: #dc3545; color: white;">Más de 90 días</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box" style="margin-top: 1.5rem;">
+                    <h4><i class="fas fa-lightbulb"></i> Interpretación del Resultado</h4>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> El <strong>Saldo al 31-Ene</strong> muestra exactamente cuánto debía cada cliente en esa fecha</li>
+                        <li><i class="fas fa-calendar-alt"></i> Los <strong>Días Vencido</strong> se calculan desde la fecha de vencimiento hasta el 31-Ene</li>
+                        <li><i class="fas fa-tags"></i> La <strong>Categoría</strong> clasifica automáticamente la antigüedad de la deuda</li>
+                        <li><i class="fas fa-info-circle"></i> Pagos realizados después del 31-Ene NO se incluyen en "Pagado"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Ejemplo 2: Resumen por Cliente -->
+            <div class="result-example">
+                <h4><i class="fas fa-users"></i> Ejemplo 2: Resumen por Cliente (Análisis de Antigüedad)</h4>
+                <p><strong>Query ejecutado:</strong> Resumen por Cliente con análisis de antigüedad al <code>31 de Enero 2025</code></p>
+
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th># Facturas</th>
+                            <th>Por Vencer</th>
+                            <th>1-30 días</th>
+                            <th>31-60 días</th>
+                            <th>61-90 días</th>
+                            <th>Más de 90</th>
+                            <th>TOTAL Cartera</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Colegio La Esperanza</strong></td>
+                            <td>3</td>
+                            <td>$0.00</td>
+                            <td>$0.00</td>
+                            <td>$500.00</td>
+                            <td>$800.00</td>
+                            <td>$2,500.00</td>
+                            <td style="font-weight: 700; font-size: 1.1rem; color: #d4af37;">$3,800.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Colegio Guadalupe</strong></td>
+                            <td>2</td>
+                            <td>$0.00</td>
+                            <td>$0.00</td>
+                            <td>$3,200.00</td>
+                            <td>$0.00</td>
+                            <td>$0.00</td>
+                            <td style="font-weight: 700; font-size: 1.1rem; color: #d4af37;">$3,200.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Inst. María Auxiliadora</strong></td>
+                            <td>4</td>
+                            <td>$500.00</td>
+                            <td>$1,000.00</td>
+                            <td>$300.00</td>
+                            <td>$0.00</td>
+                            <td>$0.00</td>
+                            <td style="font-weight: 700; font-size: 1.1rem; color: #d4af37;">$1,800.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Academia Los Andes</strong></td>
+                            <td>2</td>
+                            <td>$0.00</td>
+                            <td>$0.00</td>
+                            <td>$0.00</td>
+                            <td>$1,300.00</td>
+                            <td>$0.00</td>
+                            <td style="font-weight: 700; font-size: 1.1rem; color: #d4af37;">$1,300.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Colegio San José</strong></td>
+                            <td>1</td>
+                            <td>$0.00</td>
+                            <td>$300.00</td>
+                            <td>$0.00</td>
+                            <td>$0.00</td>
+                            <td>$0.00</td>
+                            <td style="font-weight: 700; font-size: 1.1rem; color: #d4af37;">$300.00</td>
+                        </tr>
+                        <tr style="background: #e3f2fd; font-weight: 700;">
+                            <td><strong>TOTAL GENERAL</strong></td>
+                            <td>12</td>
+                            <td>$500.00</td>
+                            <td>$1,300.00</td>
+                            <td>$4,000.00</td>
+                            <td>$2,100.00</td>
+                            <td>$2,500.00</td>
+                            <td style="font-size: 1.2rem; color: #003d82;">$10,400.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box" style="margin-top: 1.5rem;">
+                    <h4><i class="fas fa-chart-bar"></i> Análisis del Resultado</h4>
+                    <ul>
+                        <li><i class="fas fa-exclamation-triangle"></i> <strong>Colegio La Esperanza</strong> tiene el mayor monto en cartera vencida ($3,800)</li>
+                        <li><i class="fas fa-clock"></i> $2,500 del total ($10,400) están vencidos por más de 90 días - requiere gestión urgente</li>
+                        <li><i class="fas fa-chart-pie"></i> Distribución de cartera: 24% más de 90 días, 38% entre 31-60 días, 13% entre 1-30 días</li>
+                        <li><i class="fas fa-file-invoice"></i> Total de 12 facturas pendientes distribuidas en 5 clientes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Ejemplo 3: Detalle de Pagos -->
+            <div class="result-example">
+                <h4><i class="fas fa-money-check-alt"></i> Ejemplo 3: Detalle de Pagos de Factura Específica</h4>
+                <p><strong>Factura:</strong> FAC-001234 | <strong>Monto Original:</strong> $1,000.00 | <strong>Fecha de Corte:</strong> 31-Ene-2025</p>
+
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Documento</th>
+                            <th>Fecha Aplicación</th>
+                            <th>Monto</th>
+                            <th>Estado en Corte</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge badge-success">PAGO</span></td>
+                            <td>RC-5001</td>
+                            <td>2025-01-20</td>
+                            <td>$400.00</td>
+                            <td style="color: #28a745; font-weight: 600;"><i class="fas fa-check-circle"></i> Aplicado a fecha corte</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-success">PAGO</span></td>
+                            <td>RC-5023</td>
+                            <td>2025-01-20</td>
+                            <td>$300.00</td>
+                            <td style="color: #28a745; font-weight: 600;"><i class="fas fa-check-circle"></i> Aplicado a fecha corte</td>
+                        </tr>
+                        <tr style="background: #fff3cd;">
+                            <td><span class="badge badge-success">PAGO</span></td>
+                            <td>RC-5089</td>
+                            <td>2025-02-05</td>
+                            <td>$300.00</td>
+                            <td style="color: #856404; font-weight: 600;"><i class="fas fa-exclamation-triangle"></i> Posterior a fecha corte</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box" style="margin-top: 1.5rem;">
+                    <h4><i class="fas fa-calculator"></i> Cálculo Detallado</h4>
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--aspaen-gold);">
+                        <p style="font-size: 1.1rem; margin-bottom: 1rem;"><strong>Saldo al 31 de Enero 2025:</strong></p>
+                        <p style="margin-bottom: 0.5rem;">Monto Original: <strong>$1,000.00</strong></p>
+                        <p style="margin-bottom: 0.5rem;">(-) Pago RC-5001 (20-Ene): <strong>$400.00</strong> <i class="fas fa-check-circle" style="color: #28a745;"></i></p>
+                        <p style="margin-bottom: 0.5rem;">(-) Pago RC-5023 (20-Ene): <strong>$300.00</strong> <i class="fas fa-check-circle" style="color: #28a745;"></i></p>
+                        <p style="margin-bottom: 1rem; text-decoration: line-through; color: #6c757d;">(-) Pago RC-5089 (05-Feb): $300.00 <i class="fas fa-exclamation-triangle" style="color: #ffc107;"></i> <small>(No se incluye)</small></p>
+                        <hr style="margin: 1rem 0; border-color: #d4af37;">
+                        <p style="font-size: 1.3rem; font-weight: 700; color: #003d82;">
+                            Saldo Histórico = $1,000.00 - $700.00 = <span style="color: #d4af37;">$300.00</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparación: Saldo Histórico vs Saldo Actual -->
+            <div class="result-example">
+                <h4><i class="fas fa-exchange-alt"></i> Comparación: Saldo Histórico vs Saldo Actual de NetSuite</h4>
+                <p>Demostración de la diferencia entre el saldo histórico (al 31-Ene) y el saldo actual de NetSuite (hoy)</p>
+
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>Factura</th>
+                            <th>Monto Original</th>
+                            <th>Saldo al 31-Ene-2025<br/><small>(Histórico)</small></th>
+                            <th>Saldo Actual NetSuite<br/><small>(Hoy 15-Feb-2025)</small></th>
+                            <th>Diferencia</th>
+                            <th>Explicación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>FAC-001234</td>
+                            <td>$1,000.00</td>
+                            <td style="background: #fff3cd; font-weight: 700;">$300.00</td>
+                            <td style="background: #d4edda; font-weight: 700;">$0.00</td>
+                            <td>-$300.00</td>
+                            <td><small>Pago de $300 recibido el 05-Feb (después del corte)</small></td>
+                        </tr>
+                        <tr>
+                            <td>FAC-001189</td>
+                            <td>$2,500.00</td>
+                            <td style="background: #fff3cd; font-weight: 700;">$1,000.00</td>
+                            <td style="background: #d4edda; font-weight: 700;">$250.00</td>
+                            <td>-$750.00</td>
+                            <td><small>Pago de $750 recibido el 10-Feb (después del corte)</small></td>
+                        </tr>
+                        <tr>
+                            <td>FAC-001098</td>
+                            <td>$3,200.00</td>
+                            <td style="background: #fff3cd; font-weight: 700;">$3,200.00</td>
+                            <td style="background: #d4edda; font-weight: 700;">$3,200.00</td>
+                            <td>$0.00</td>
+                            <td><small>Sin pagos adicionales desde el 31-Ene</small></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box" style="margin-top: 1.5rem;">
+                    <h4><i class="fas fa-key"></i> Conclusión Clave</h4>
+                    <p style="font-size: 1.1rem;">
+                        El campo <code>foreignamountunpaid</code> de NetSuite siempre refleja el <strong>saldo actual</strong> (hoy).
+                        Para obtener el saldo en una <strong>fecha pasada</strong> (ej: 31-Ene), es OBLIGATORIO usar el método de
+                        reconstrucción histórica con la tabla <code>AppliedCreditTransactionLineLink</code>.
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        <i class="fas fa-exclamation-circle" style="color: #ffc107;"></i>
+                        <strong>Sin este sistema:</strong> Sería imposible saber cuánto debía un cliente hace 2 semanas, 1 mes o 6 meses.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: Implementación -->
+        <div id="implementacion" class="tab-content">
+            <h2><i class="fas fa-rocket"></i> Guía de Implementación Paso a Paso</h2>
+
+            <div class="solution-box" style="margin-bottom: 2rem;">
+                <h3><i class="fas fa-check-circle"></i> Solución al Requerimiento</h3>
+                <p><strong>PROBLEMA:</strong> No se puede consultar el saldo de cartera en fechas pasadas porque NetSuite actualiza dinámicamente el campo de saldo.</p>
+                <p><strong>SOLUCIÓN:</strong> Reconstruir el saldo histórico sumando el monto original facturado menos los pagos aplicados hasta la fecha de consulta.</p>
+            </div>
+
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4><i class="fas fa-cog"></i> Configuración Inicial</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Verificar que existe la conexión ODBC a NetSuite (Linked Server "NETSUITE")</li>
+                        <li><i class="fas fa-check"></i> Configurar timeout ilimitado con <code>sp_serveroption</code></li>
+                        <li><i class="fas fa-check"></i> Crear base de datos local para almacenar las tablas migradas</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4><i class="fas fa-cloud-download-alt"></i> Migración de Datos</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Ejecutar el script de creación de tablas locales</li>
+                        <li><i class="fas fa-check"></i> Ejecutar el script de migración completo (ver pestaña "Migración de Datos")</li>
+                        <li><i class="fas fa-check"></i> Verificar que se crearon los índices correctamente</li>
+                        <li><i class="fas fa-clock"></i> <strong>Tiempo estimado:</strong> 15-20 minutos para toda la data</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4><i class="fas fa-check-double"></i> Validación de Datos</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Comparar conteos: Verificar que el número de registros migrados coincida</li>
+                        <li><i class="fas fa-check"></i> Validar una factura conocida: Ejecutar el query de detalle con un ID específico</li>
+                        <li><i class="fas fa-check"></i> Comparar saldo actual vs. saldo histórico de hace 1 mes</li>
+                    </ul>
+                    <div class="code-block" style="margin-top: 1rem;">
+                        <pre><code><span class="comment">-- Verificar conteos</span>
+<span class="keyword">SELECT</span> <span class="function">COUNT</span>(*) <span class="keyword">FROM</span> [Transaction_Local] <span class="keyword">WHERE</span> type = <span class="string">'CustInvc'</span>;
+<span class="keyword">SELECT</span> <span class="function">COUNT</span>(*) <span class="keyword">FROM</span> [Customer_Local];
+<span class="keyword">SELECT</span> <span class="function">COUNT</span>(*) <span class="keyword">FROM</span> [AppliedCredit_Local];</code></pre>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h4><i class="fas fa-search"></i> Consultas de Cartera</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Utilizar el query principal cambiando la variable <code>@FechaCorte</code></li>
+                        <li><i class="fas fa-file-excel"></i> Exportar resultados a Excel para análisis</li>
+                        <li><i class="fas fa-chart-bar"></i> Crear reportes de antigüedad de saldos por cliente</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <h4><i class="fas fa-sync-alt"></i> Automatización (Opcional)</h4>
+                    <ul>
+                        <li><i class="fas fa-robot"></i> Crear un SQL Server Agent Job para actualizar las tablas diariamente</li>
+                        <li><i class="fas fa-bell"></i> Configurar alertas si hay discrepancias significativas</li>
+                        <li><i class="fas fa-save"></i> Crear vistas materializadas para consultas frecuentes</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">6</div>
+                    <h4><i class="fas fa-tools"></i> Mantenimiento</h4>
+                    <ul>
+                        <li><i class="fas fa-arrow-up"></i> <strong>Actualización incremental:</strong> Migrar solo registros nuevos desde la última ejecución</li>
+                        <li><i class="fas fa-trash-alt"></i> <strong>Limpieza:</strong> Archivar datos antiguos (>2 años) si es necesario</li>
+                        <li><i class="fas fa-chart-line"></i> <strong>Monitoreo:</strong> Revisar logs de ejecución del proceso de migración</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 3rem;">
+                <h4><i class="fas fa-lightbulb"></i> Ejemplo Práctico de Uso</h4>
+                <p><strong>Escenario:</strong> Necesito saber cuánto debía el cliente "COLEGIO EJEMPLO" el 30 de junio de 2025</p>
+                <ol>
+                    <li><i class="fas fa-edit"></i> Cambiar variable: <code>@FechaCorte = '2025-06-30'</code></li>
+                    <li><i class="fas fa-play"></i> Ejecutar el query principal de cartera</li>
+                    <li><i class="fas fa-filter"></i> Filtrar por cliente específico agregando: <code>AND cust.companyname LIKE '%EJEMPLO%'</code></li>
+                    <li><i class="fas fa-check-circle"></i> El campo <code>saldo_cartera_fecha_corte</code> mostrará el saldo exacto a esa fecha</li>
+                </ol>
+            </div>
+
+            <div class="problem-box" style="margin-top: 2rem;">
+                <h3><i class="fas fa-key"></i> Puntos Clave para Recordar</h3>
+                <ul>
+                    <li><i class="fas fa-dollar-sign"></i> <strong>foreigntotal:</strong> Monto original que NUNCA cambia (base del cálculo)</li>
+                    <li><i class="fas fa-calendar-alt"></i> <strong>nextdate:</strong> Fecha de aplicación del pago (filtro crítico para histórico)</li>
+                    <li><i class="fas fa-link"></i> <strong>previousdoc:</strong> ID de la factura en la tabla de vínculos</li>
+                    <li><i class="fas fa-sync"></i> <strong>Migración:</strong> Ejecutar periódicamente para mantener datos actualizados</li>
+                    <li><i class="fas fa-check-double"></i> <strong>Validación:</strong> Siempre comparar con NetSuite para verificar precisión</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p><strong>ASPAEN</strong> - Asociación para la Enseñanza</p>
+        <p>Documentación Técnica - Sistema de Cartera Histórica NetSuite</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;"> Propuesto por: Conocimiento Corporativo </p>
+    </footer>
+
+    <script>
+        function openTab(tabName) {
+            // Ocultar todos los contenidos
+            const contents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < contents.length; i++) {
+                contents[i].classList.remove('active');
+            }
+
+            // Desactivar todos los botones
+            const buttons = document.getElementsByClassName('tab-button');
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
+
+            // Mostrar el contenido seleccionado
+            document.getElementById(tabName).classList.add('active');
+
+            // Activar el botón seleccionado
+            event.target.classList.add('active');
+
+            // Scroll suave al inicio del contenido
+            window.scrollTo({
+                top: document.querySelector('.tabs').offsetTop - 20,
+                behavior: 'smooth'
+            });
+        }
+
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const code = codeBlock.querySelector('pre code').innerText;
+
+            navigator.clipboard.writeText(code).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+                button.style.background = '#28a745';
+
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.background = '#d4af37';
+                }, 2000);
+            });
+        }
+
+        // Animación suave al cargar
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
